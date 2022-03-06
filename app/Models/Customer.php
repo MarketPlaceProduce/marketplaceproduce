@@ -16,6 +16,6 @@ class Customer extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('price')->withTimestamps();
+        return $this->belongsToMany(Product::class)->withPivot('markup')->withTimestamps();
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained();
             $table->index(['customer_id', 'product_id']);
             $table->timestamps();
-            $table->decimal('price')->nullable();
+            $table->decimal('markup')->nullable();
         });
     }
 

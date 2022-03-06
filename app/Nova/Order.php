@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -54,28 +55,46 @@ class Order extends Resource
 
             DateTime::make('Deliver At')->format('DD MMM YYYY'),
 
-            Currency::make('Total', 'total')
+            Text::make('Total', function ($model) {
+                $sum = $model->products->sum(function ($product) use ($model) {
+                    $customerMarkup = $product->customers->find($model->customer_id)->pivot->markup;
+
+                    if ($customerMarkup) {
+                        return (($product->source_price * $customerMarkup) + $product->source_price) * $product->pivot->quantity;
+                    } else {
+                        return (($product->source_price * $product->default_markup) + $product->source_price) * $product->pivot->quantity;
+                    }
+                });
+
+                $sourceSum = $model->products->sum(function ($product) {
+                    return $product->source_price * $product->pivot->quantity;
+                });
+
+                return '$'.$sum.' ('.(($sum / $sourceSum - 1) * 100).'% Markup)';
+            })
                 ->readonly()
                 ->sortable(),
 
             BelongsToMany::make('Products')
                 ->fields(function ($request, $relatedModel) {
                     return [
-                        Number::make('Amount'),
+                        Number::make('Quantity')->step(0.01),
 
-                        Number::make('Price', function ($pivot) use ($relatedModel) {
+                        Number::make('Markup', function ($pivot) use ($relatedModel) {
                             if (!$relatedModel->customers) {
                                 return;
                             }
 
-                            $customerPrice = $relatedModel->customers->find($relatedModel->pivot->pivotParent->customer_id)->pivot->price;
+                            $customerMarkup = $relatedModel->customers->find($relatedModel->pivot->pivotParent->customer_id)->pivot->markup;
 
-                            if ($customerPrice) {
-                                return "\${$customerPrice}";
+                            if ($customerMarkup) {
+                                return ($customerMarkup * 100).'% ($'.(($relatedModel->source_price * $customerMarkup) + $relatedModel->source_price).')';
                             } else {
-                                return "\${$relatedModel->default_price} (default)";
+                                return ($relatedModel->default_markup * 100).'% ($'.(($relatedModel->source_price * $relatedModel->default_markup) + $relatedModel->source_price).') (default)';
                             }
-                        })->readonly(),
+                        })
+                            ->step(0.01)
+                            ->readonly(),
                     ];
                 }),
         ];

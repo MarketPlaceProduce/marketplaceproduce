@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Carrots',
                 'source' => 'Vinyards',
                 'source_price' => 0.99,
-                'default_price' => 1.99,
+                'default_markup' => 0.30,
             ]);
 
         DB::table('products')
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Potatoes',
                 'source' => 'Vinyards',
                 'source_price' => 0.99,
-                'default_price' => 1.99,
+                'default_markup' => 0.30,
             ]);
 
         DB::table('products')
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Brocolli',
                 'source' => 'Vinyards',
                 'source_price' => 0.99,
-                'default_price' => 1.99,
+                'default_markup' => 0.30,
             ]);
     }
 }

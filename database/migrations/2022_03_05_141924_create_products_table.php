@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('source');
             $table->decimal('source_price');
-            $table->decimal('default_price');
+            $table->decimal('default_markup');
         });
     }
 

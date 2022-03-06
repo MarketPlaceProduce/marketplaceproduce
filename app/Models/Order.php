@@ -14,17 +14,6 @@ class Order extends Model
         'deliver_at' => 'datetime',
     ];
 
-    public function total(): Attribute
-    {
-        return Attribute::make(
-            get: function () {
-                return $this->products->sum(function ($product) {
-                    return ($product->customers->find($this->id)->pivot->price ?? $product->default_price) * $product->pivot->amount;
-                });
-            }
-        );
-    }
-
     public function customer()
     {
         return $this->belongsTo(Customer::class);
@@ -32,6 +21,6 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('amount')->withTimestamps();
+        return $this->belongsToMany(Product::class)->withPivot('quantity')->withTimestamps();
     }
 }

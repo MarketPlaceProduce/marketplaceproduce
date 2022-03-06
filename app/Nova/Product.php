@@ -52,21 +52,27 @@ class Product extends Resource
 
             Currency::make(__('Source Price'), 'source_price')->sortable(),
 
-            Currency::make(__('Default Price'), 'default_price')->sortable(),
+            Number::make(__('Default Markup'), 'default_markup')
+                ->step(0.01)
+                ->displayUsing(function ($markup) {
+                    return ($markup * 100).'% ($'.(($this->source_price * $markup) + $this->source_price).')';
+                })
+                ->sortable(),
 
             BelongsToMany::make('Orders')
                 ->fields(function ($request, $relatedModel) {
                     return [
-                        Number::make('Amount'),
+                        Number::make('Quantity'),
                     ];
                 }),
 
             BelongsToMany::make('Customers')
                 ->fields(function ($request, $relatedModel) {
                     return [
-                        Currency::make('Price')
-                            ->default(function ($request) use ($relatedModel) {
-                                return "\${$relatedModel->pivot->pivotParent->default_price} (default)";
+                        Number::make('Markup')
+                            ->step(0.01)
+                            ->displayUsing(function ($markup) use ($relatedModel) {
+                                return $markup ? ($markup * 100).'% ($'.(($relatedModel->pivot->pivotParent->source_price * $markup) + $relatedModel->pivot->pivotParent->source_price).')' : ($relatedModel->pivot->pivotParent->default_markup * 100).'% ($'.(($relatedModel->pivot->pivotParent->source_price * $relatedModel->pivot->pivotParent->default_markup) + $relatedModel->pivot->pivotParent->source_price).') (default)';
                             }),
                     ];
                 }),

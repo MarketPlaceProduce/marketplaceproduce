@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -68,9 +69,10 @@ class Customer extends Resource
             BelongsToMany::make('Products')
                 ->fields(function ($request, $relatedModel) {
                     return [
-                        Currency::make('Price')
-                            ->default(function ($request) use ($relatedModel) {
-                                return "\${$relatedModel->default_price} (default)";
+                        Number::make('Markup')
+                            ->step(0.01)
+                            ->displayUsing(function ($markup) use ($relatedModel) {
+                                return $markup ? ($markup * 100).'% ($'.(($relatedModel->source_price * $markup) + $relatedModel->source_price).')' : ($relatedModel->default_markup * 100).'% ($'.(($relatedModel->source_price * $relatedModel->default_markup) + $relatedModel->source_price).') (default)';
                             }),
                     ];
                 }),
