@@ -17,6 +17,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     public function boot()
     {
         parent::boot();
+
+        Nova::style('theme', base_path('public/css/theme.css'));
     }
 
     /**
