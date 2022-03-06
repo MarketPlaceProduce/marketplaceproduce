@@ -62,6 +62,20 @@ class Order extends Resource
                 ->fields(function ($request, $relatedModel) {
                     return [
                         Number::make('Amount'),
+
+                        Number::make('Price', function ($pivot) use ($relatedModel) {
+                            if (!$relatedModel->customers) {
+                                return;
+                            }
+
+                            $customerPrice = $relatedModel->customers->find($relatedModel->pivot->pivotParent->customer_id)->pivot->price;
+
+                            if ($customerPrice) {
+                                return "\${$customerPrice}";
+                            } else {
+                                return "\${$relatedModel->default_price} (default)";
+                            }
+                        })->readonly(),
                     ];
                 }),
         ];

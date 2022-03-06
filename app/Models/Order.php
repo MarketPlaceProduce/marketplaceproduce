@@ -18,8 +18,9 @@ class Order extends Model
     {
         return Attribute::make(
             get: function () {
-                return 0;
-                // dd($this->products);
+                return $this->products->sum(function ($product) {
+                    return ($product->customers->find($this->id)->pivot->price ?? $product->default_price) * $product->pivot->amount;
+                });
             }
         );
     }

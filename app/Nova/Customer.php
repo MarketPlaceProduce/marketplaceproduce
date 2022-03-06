@@ -68,7 +68,10 @@ class Customer extends Resource
             BelongsToMany::make('Products')
                 ->fields(function ($request, $relatedModel) {
                     return [
-                        Currency::make('Price'),
+                        Currency::make('Price')
+                            ->default(function ($request) use ($relatedModel) {
+                                return "\${$relatedModel->default_price} (default)";
+                            }),
                     ];
                 }),
         ];
