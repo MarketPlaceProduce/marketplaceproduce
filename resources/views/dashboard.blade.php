@@ -9,11 +9,17 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex items-center px-3 sm:px-0">
                 <h1 class="text-4xl">Orders</h1>
-                <a href="{{ route('create-order') }}" class="ml-auto">
-                    <x-button>
-                        {{ __('New Order') }}
+                @if($customer)
+                    <a href="{{ route('create-order') }}" class="ml-auto">
+                        <x-button>
+                            {{ __('New Order') }}
+                        </x-button>
+                    </a>
+                @else
+                    <x-button class="ml-auto" disabled>
+                            {{ __('New Order') }}
                     </x-button>
-                </a>
+                @endif
             </div>
             <hr class="my-3 border-t-2" />
             @foreach ($orders as $order)
@@ -38,7 +44,14 @@
                     </div>
                 </div>
             @endforeach
-            @if ($orders->isEmpty())
+            @if (!$customer)
+                <div class="p-4">
+                    <p class="text-center text-muted">
+                        {{ __('Thank you for your interest, your account will be reviewed by an administrator before being able to create online orders') }}
+                    </p>
+                </div>
+            @endif
+            @if ($customer && $orders->isEmpty())
                 <div class="p-4">
                     <p class="text-center text-muted">
                         {{ __('Nothing here yet.') }}

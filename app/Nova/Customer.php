@@ -7,6 +7,7 @@ use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\BelongsToMany;
@@ -63,6 +64,8 @@ class Customer extends Resource
             Text::make(__('Contact Email'), 'contact_email')->sortable(),
 
             Text::make(__('Contact Phone'), 'contact_phone')->sortable(),
+
+            Boolean::make(__('Active'), 'active')->sortable(),
 
             HasMany::make('Orders'),
 

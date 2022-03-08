@@ -16,7 +16,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $customer = $request->user()->customers->first();
+        $customer = $request->user()->customers->where('active', 1)->first();
         
         return view('dashboard', [
             'customer' => $customer,
@@ -31,7 +31,7 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
-        $customer = $request->user()->customers->first();
+        $customer = $request->user()->customers->where('active', 1)->first();
 
         if (! $customer) {
             return redirect()->route('dashboard');

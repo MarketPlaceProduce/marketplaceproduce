@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('contact_name');
             $table->string('contact_email');
             $table->string('contact_phone');
+            $table->boolean('active')->default(false);
         });
     }
 
