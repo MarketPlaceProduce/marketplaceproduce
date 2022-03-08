@@ -19,7 +19,7 @@ return [
     |
     */
 
-    'name' => env('NOVA_APP_NAME', 'Back to Main Site'),
+    'name' => env('NOVA_APP_NAME', 'Market Place Produce'),
 
     /*
     |--------------------------------------------------------------------------

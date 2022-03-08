@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex items-end px-3 sm:px-0">
+            <div class="flex items-end px-3 sm:px-0 flex-wrap">
                 <h1 class="text-4xl">Order {{ $order->id }}</h1>
                 <div  class="bg-purple-500 bg-blue-500 bg-green-500"></div>
                 <div class="order-status px-2 my-2 ml-2 rounded bg-{{ 

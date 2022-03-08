@@ -51,12 +51,19 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
+        $products = $request->except(['_token', 'customer', 'deliver_at']);
         $request->validate([
             'customer' => ['required', 'string'],
             'deliver_at' => ['required', 'date'],
+            '_token' => [
+                function ($attribute, $value, $fail) use ($products) {
+                    if (collect($products)->sum() <= 0) {
+                        $fail('You must select at least one product.');
+                    }
+                },
+            ],
         ]);
 
-        $products = $request->except(['_token', 'customer', 'deliver_at']);
         $customerId = $request->input('customer');
         $deliverAt = $request->input('deliver_at');
 

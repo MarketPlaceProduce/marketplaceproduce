@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex items-end px-3 sm:px-0">
+            <div class="flex items-end px-3 sm:px-0 flex-wrap">
                 <h1 class="text-4xl">New Order</h1>
                 <div class="ml-auto text-right">
                     <div class="text-lg">{{ $customer->name }}</div>
@@ -49,6 +49,7 @@
                             type="text"
                             placeholder="0"
                             name="{{ $product->id }}"
+                            value="{{ old($product->id) }}"
                             data-id="{{ $product->id }}" />
                     </div>
                     <div class="ml-2"> = </div>
