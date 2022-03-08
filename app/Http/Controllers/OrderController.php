@@ -16,8 +16,11 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
+        $customer = $request->user()->customers->first();
+        
         return view('dashboard', [
-            'orders' => $request->user()->customers->first()->orders->sortByDesc('id'),
+            'customer' => $customer,
+            'orders' => $customer ? $customer->orders->sortByDesc('id') : collect([]),
         ]);
     }
 
@@ -28,9 +31,15 @@ class OrderController extends Controller
      */
     public function create(Request $request)
     {
+        $customer = $request->user()->customers->first();
+
+        if (! $customer) {
+            return redirect()->route('dashboard');
+        }
+
         return view('create-order', [
-            'products' => $request->user()->customers->first()->products,
-            'customer' => $request->user()->customers->first(),
+            'products' =>$customer->products,
+            'customer' =>$customer,
         ]);
     }
 
