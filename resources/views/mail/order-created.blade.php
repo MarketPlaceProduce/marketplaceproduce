@@ -1,0 +1,22 @@
+@component('mail::message')
+# Order Created
+
+This is a confirmation of your order placed for Market Place Produce's online ordering platform. No further action is required. An invoice with the final price will be sent to this same email address.
+
+## Order {{ $order->id }}
+
+Estimated Delivery: {{ $order->deliver_at->format('m/d/Y') }}
+
+Address: {{ $order->customer->address }}
+
+@component('mail::table')
+| Product ID | Product | Quantity |
+|------------|---------|---------:|
+@foreach ($order->products as $product)
+| {{ $product->id }} | {{ $product->name }} | {{ $product->pivot->quantity }} |
+@endforeach
+@endcomponent
+
+Thanks,<br>
+{{ config('app.name') }}
+@endcomponent

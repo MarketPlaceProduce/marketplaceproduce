@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderCreated;
+use App\Mail\OrderCreatedAdmin;
 
 class OrderController extends Controller
 {
@@ -79,6 +82,9 @@ class OrderController extends Controller
                 ]);
             }
         }
+
+        Mail::to($order->customer->contact_email)->send(new OrderCreated($order));
+        Mail::to('admin@marketplaceproduce.com')->send(new OrderCreatedAdmin($order));
 
         return redirect()->route('dashboard');
     }
