@@ -47,4 +47,8 @@ class User extends Authenticatable
             'admin@marketplaceproduce.com',
         ]);
     }
+
+    public function customers() {
+        return $this->belongsToMany(Customer::class)->withTimestamps();
+    }
 }

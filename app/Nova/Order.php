@@ -8,6 +8,8 @@ use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Currency;
+use Laravel\Nova\Fields\Badge;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\BelongsToMany;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -55,7 +57,25 @@ class Order extends Resource
 
             DateTime::make('Deliver At')->format('DD MMM YYYY'),
 
+            Badge::make('Status')->map([
+                'pending' => 'info',
+                'invoiced' => 'warning',
+                'rejected' => 'danger',
+                'delivered' => 'success',
+            ]),
+
+            Select::make('Status')->options([
+                'pending' => 'Pending',
+                'invoiced' => 'Invoiced',
+                'rejected' => 'Rejected',
+                'delivered' => 'Delivered',
+            ])->onlyOnForms(),
+
             Text::make('Total', function ($model) {
+                if (!count($model->products)) {
+                    return '$0.00';
+                }
+
                 $sum = $model->products->sum(function ($product) use ($model) {
                     $customerMarkup = $product->customers->find($model->customer_id)->pivot->markup;
 
@@ -70,7 +90,7 @@ class Order extends Resource
                     return $product->source_price * $product->pivot->quantity;
                 });
 
-                return '$'.$sum.' ('.(($sum / $sourceSum - 1) * 100).'% Markup)';
+                return '$'.number_format($sum, 2).' ('.round(($sum / $sourceSum - 1) * 100).'% Markup)';
             })
                 ->readonly()
                 ->sortable(),
@@ -88,9 +108,9 @@ class Order extends Resource
                             $customerMarkup = $relatedModel->customers->find($relatedModel->pivot->pivotParent->customer_id)->pivot->markup;
 
                             if ($customerMarkup) {
-                                return ($customerMarkup * 100).'% ($'.(($relatedModel->source_price * $customerMarkup) + $relatedModel->source_price).')';
+                                return ($customerMarkup * 100).'% ($'.number_format(($relatedModel->source_price * $customerMarkup) + $relatedModel->source_price, 2).')';
                             } else {
-                                return ($relatedModel->default_markup * 100).'% ($'.(($relatedModel->source_price * $relatedModel->default_markup) + $relatedModel->source_price).') (default)';
+                                return ($relatedModel->default_markup * 100).'% ($'.number_format(($relatedModel->source_price * $relatedModel->default_markup) + $relatedModel->source_price, 2).') (default)';
                             }
                         })
                             ->step(0.01)

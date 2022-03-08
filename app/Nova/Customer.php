@@ -72,10 +72,12 @@ class Customer extends Resource
                         Number::make('Markup')
                             ->step(0.01)
                             ->displayUsing(function ($markup) use ($relatedModel) {
-                                return $markup ? ($markup * 100).'% ($'.(($relatedModel->source_price * $markup) + $relatedModel->source_price).')' : ($relatedModel->default_markup * 100).'% ($'.(($relatedModel->source_price * $relatedModel->default_markup) + $relatedModel->source_price).') (default)';
+                                return $markup ? ($markup * 100).'% ($'.number_format(($relatedModel->source_price * $markup) + $relatedModel->source_price, 2).')' : ($relatedModel->default_markup * 100).'% ($'.number_format(($relatedModel->source_price * $relatedModel->default_markup) + $relatedModel->source_price, 2).') (default)';
                             }),
                     ];
                 }),
+            
+            BelongsToMany::make('Users')
         ];
     }
 

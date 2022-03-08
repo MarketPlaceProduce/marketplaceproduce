@@ -18,4 +18,9 @@ class Customer extends Model
     {
         return $this->belongsToMany(Product::class)->withPivot('markup')->withTimestamps();
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

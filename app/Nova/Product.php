@@ -55,7 +55,7 @@ class Product extends Resource
             Number::make(__('Default Markup'), 'default_markup')
                 ->step(0.01)
                 ->displayUsing(function ($markup) {
-                    return ($markup * 100).'% ($'.(($this->source_price * $markup) + $this->source_price).')';
+                    return ($markup * 100).'% ($'.number_format(($this->source_price * $markup) + $this->source_price, 2).')';
                 })
                 ->sortable(),
 
@@ -72,7 +72,7 @@ class Product extends Resource
                         Number::make('Markup')
                             ->step(0.01)
                             ->displayUsing(function ($markup) use ($relatedModel) {
-                                return $markup ? ($markup * 100).'% ($'.(($relatedModel->pivot->pivotParent->source_price * $markup) + $relatedModel->pivot->pivotParent->source_price).')' : ($relatedModel->pivot->pivotParent->default_markup * 100).'% ($'.(($relatedModel->pivot->pivotParent->source_price * $relatedModel->pivot->pivotParent->default_markup) + $relatedModel->pivot->pivotParent->source_price).') (default)';
+                                return $markup ? ($markup * 100).'% ($'.number_format(($relatedModel->pivot->pivotParent->source_price * $markup) + $relatedModel->pivot->pivotParent->source_price, 2).')' : ($relatedModel->pivot->pivotParent->default_markup * 100).'% ($'.number_format(($relatedModel->pivot->pivotParent->source_price * $relatedModel->pivot->pivotParent->default_markup) + $relatedModel->pivot->pivotParent->source_price, 2).') (default)';
                             }),
                     ];
                 }),

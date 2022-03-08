@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\Order;
@@ -13,9 +14,11 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        return view('dashboard', [
+            'orders' => $request->user()->customers->first()->orders->sortByDesc('id'),
+        ]);
     }
 
     /**
@@ -23,9 +26,12 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        return view('create-order', [
+            'products' => $request->user()->customers->first()->products,
+            'customer' => $request->user()->customers->first(),
+        ]);
     }
 
     /**
@@ -36,7 +42,24 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
-        //
+        $products = $request->except(['_token', 'customer', 'deliver_at']);
+        $customerId = $request->input('customer');
+        $deliverAt = $request->input('deliver_at');
+
+        $order = Order::create([
+            'customer_id' => $customerId,
+            'deliver_at' => $deliverAt,
+        ]);
+
+        foreach ($products as $productId => $quantity) {
+            if ($quantity > 0) {
+                $order->products()->attach($productId, [
+                    'quantity' => $quantity,
+                ]);
+            }
+        }
+
+        return redirect()->route('dashboard');
     }
 
     /**

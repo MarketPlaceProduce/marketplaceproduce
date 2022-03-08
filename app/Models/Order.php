@@ -10,6 +10,11 @@ class Order extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'customer_id',
+        'deliver_at',
+    ];
+
     protected $casts = [
         'deliver_at' => 'datetime',
     ];
