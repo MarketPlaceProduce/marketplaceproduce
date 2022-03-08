@@ -6,13 +6,15 @@
             </a>
         </x-slot>
 
+        <div class="w-full sm:max-w-2xl mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-            <div class="flex">
-                <div class="flex-1 mr-3">
+            <div class="flex flex-wrap">
+                <div class="flex-1 mr-0 sm:mr-4 min-w-[300px]">
                     <!-- Name -->
                     <div>
                         <x-label for="name" :value="__('Name')" />
@@ -46,7 +48,7 @@
                                         name="password_confirmation" required />
                     </div>
                 </div>
-                <div class="flex-1">
+                <div class="flex-1 min-w-[300px]">
                     <!-- Phone -->
                     <div>
                         <x-label for="phone" :value="__('Phone Number')" />
@@ -80,5 +82,6 @@
                 </x-button>
             </div>
         </form>
+        </div>
     </x-auth-card>
 </x-guest-layout>

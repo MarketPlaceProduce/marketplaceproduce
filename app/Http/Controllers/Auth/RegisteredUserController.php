@@ -9,6 +9,8 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CustomerRegistered;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -57,6 +59,10 @@ class RegisteredUserController extends Controller
             'contact_phone' => $request->phone,
             'contact_email' => $request->email,
         ]);
+
+        foreach ([$user->email, 'admin@marketplaceproduce.com'] as $recipient) {
+            Mail::to($recipient)->send(new CustomerRegistered($customer));
+        }
 
         Auth::login($user);
 
