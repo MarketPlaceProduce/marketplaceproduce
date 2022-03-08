@@ -25,4 +25,6 @@ Route::get('/orders/create', [OrderController::class, 'create'])->middleware(['a
 
 Route::post('/orders/create', [OrderController::class, 'store'])->middleware(['auth'])->name('create-order');
 
+Route::get('/orders/{order}', [OrderController::class, 'show'])->middleware(['auth'])->name('order-details');
+
 require __DIR__.'/auth.php';

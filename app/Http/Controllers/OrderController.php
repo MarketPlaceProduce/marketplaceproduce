@@ -51,6 +51,11 @@ class OrderController extends Controller
      */
     public function store(StoreOrderRequest $request)
     {
+        $request->validate([
+            'customer' => ['required', 'string'],
+            'deliver_at' => ['required', 'date'],
+        ]);
+
         $products = $request->except(['_token', 'customer', 'deliver_at']);
         $customerId = $request->input('customer');
         $deliverAt = $request->input('deliver_at');
@@ -79,7 +84,15 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
-        //
+        if (!$order) {
+            return redirect()->route('dashboard');
+        }
+
+        return view('order-details', [
+            'order' => $order,
+            'customer' => $order->customer,
+            'products' => $order->products,
+        ]);
     }
 
     /**

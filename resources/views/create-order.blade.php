@@ -21,7 +21,7 @@
                     type="search"
                     placeholder="Search" />
             </div>
-            <div class="text-slate-600 text-center my-2">
+            <div class="text-slate-500 text-center my-2">
                 Protip: when search is selected, press <code>TAB</code> to move to the first product's quantity, then <code>SHIFT+TAB</code> to move back to the search bar
             </div>
             <form  method="POST" action="{{ route('create-order') }}">
@@ -32,8 +32,13 @@
                     <div>
                         <img src="{{ $product->image }}" alt="{{ $product->name }}" class="w-10 h-10" />
                     </div>
-                    <div class="name ml-2">
-                    {{ $product->name }}
+                    <div class="ml-2">
+                        <div class="name ">
+                        {{ $product->name }}
+                        </div>
+                        <div class="id text-slate-500 text-xs">
+                        {{ $product->id }}
+                        </div>
                     </div>
                     <div class="price ml-auto mr-2" data-id="{{ $product->id }}">
                     ${{ number_format($product->source_price * ($product->pivot->markup ?? $product->default_markup), 2) }} &times;
@@ -53,8 +58,9 @@
             <hr class="my-3 border-t-2" />
             <div class="my-1 flex flex-col items-end justify-end px-3 sm:px-0">
                 <div class="ml-auto text-xl">Deliver At:</div>
-                <x-input type="date" name="deliver_at" />
+                <x-input type="date" name="deliver_at" min="{{ date('Y-m-d') }}" />
                 <div class="ml-auto text-xl mb-3">Estimated Total: <span id="total">$0.00</span></div>
+                <x-auth-validation-errors class="mb-4" :errors="$errors" />
                 <x-button>
                         {{ __('Submit order') }}
                 </x-button>

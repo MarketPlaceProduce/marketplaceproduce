@@ -23,12 +23,14 @@
             </div>
             <hr class="my-3 border-t-2" />
             @foreach ($orders as $order)
-                <div class="order bg-white overflow-hidden shadow-sm sm:rounded-lg bg-white p-4 my-1 border-b border-gray-200 flex items-center">
-                    <div class="order-id text-slate-500 text-sm">
-                        {{ $order->id }}
-                    </div>
-                    <div class="order-customer ml-3 text-lg">
-                        {{ $order->customer->name }}
+                <a href="{{ route('order-details', $order->id) }}" class="order bg-white overflow-hidden shadow-sm sm:rounded-lg bg-white p-4 my-1 border-b border-gray-200 flex items-center">
+                    <div>
+                        <div class="order-customer text-lg">
+                            {{ $order->customer->name }}
+                        </div>
+                        <div class="order-id text-slate-500 text-xs">
+                            {{ $order->id }}
+                        </div>
                     </div>
                     <div class="ml-auto flex flex-col items-end text-right">
                         <div  class="bg-purple-500 bg-blue-500 bg-green-500"></div>
@@ -38,11 +40,11 @@
                             'blue') }}-500 text-white">
                             {{ $order->status }}
                         </div>
-                        <div class="order-deliver-at text-slate-500">
+                        <div class="order-deliver-at text-slate-500 mt-1 text-sm">
                             Estimated Delivery: {{ $order->deliver_at->format('m/d/Y') }}
                         </div>
                     </div>
-                </div>
+                </a>
             @endforeach
             @if (!$customer)
                 <div class="p-4">
