@@ -30,7 +30,8 @@ class DatabaseSeeder extends Seeder
                 'address' => "530 NW 23rd St\nOklahoma City, OK 73103",
                 'contact_name' => 'John Doe',
                 'contact_phone' => '+1 (555) 555-5555',
-                'contact_email' => 'john@bigtruck.com'
+                'contact_email' => 'john@bigtruck.com',
+                'active' => 1
             ]);
 
         DB::table('customer_user')
