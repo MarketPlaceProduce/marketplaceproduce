@@ -55,7 +55,20 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
      */
     protected function cards()
     {
-        return [];
+        return [
+            new \Tightenco\NovaGoogleAnalytics\PageViewsMetric,
+            new \Tightenco\NovaGoogleAnalytics\VisitorsMetric,
+            new \Tightenco\NovaGoogleAnalytics\MostVisitedPagesCard,
+            new \Tightenco\NovaGoogleAnalytics\ReferrersList,
+            new \Tightenco\NovaGoogleAnalytics\OneDayActiveUsersMetric,
+            new \Tightenco\NovaGoogleAnalytics\SevenDayActiveUsersMetric,
+            new \Tightenco\NovaGoogleAnalytics\FourteenDayActiveUsersMetric,
+            new \Tightenco\NovaGoogleAnalytics\TwentyEightDayActiveUsersMetric,
+            new \Tightenco\NovaGoogleAnalytics\SessionsMetric,
+            new \Tightenco\NovaGoogleAnalytics\SessionDurationMetric,
+            new \Tightenco\NovaGoogleAnalytics\SessionsByDeviceMetric,
+            new \Tightenco\NovaGoogleAnalytics\SessionsByCountryMetric,
+        ];
     }
 
     /**
