@@ -77,8 +77,8 @@
                         <!-- Hours -->
                         <div class="grid-column span-12 hide-on-mobile mt1 reveal-on-scroll is-revealing">
                             <div class="square">
-                                <a href="/orders/create" class="aspect-ratio__content bg--tan centered-content align--center text--primary-color link">
-                                    <p class="h3 heading-font mb0 uppercase">Place an order <span>(Resturant)</span></p>
+                                <a class="aspect-ratio__content bg--tan centered-content align--center text--primary-color link">
+                                    <p class="h3 heading-font mb0 uppercase">Resturant Orders Coming Soon</p>
                                 </a>
                             </div>
                         </div>
@@ -91,8 +91,8 @@
                         </div>
                         <div class="grid-column span-12 show-on-mobile mt1 reveal-on-scroll is-revealing">
                             <div class="rectangle">
-                                <a href="/orders/create" class="aspect-ratio__content bg--tan centered-content align--center text--primary-color link">
-                                    <p class="h3 heading-font mb0 uppercase">Place an order <span>(Resturant)</span></p>
+                                <a class="aspect-ratio__content bg--tan centered-content align--center text--primary-color link">
+                                    <p class="h3 heading-font mb0 uppercase">Resturant Orders Coming Soon</p>
                                 </a>
                             </div>
                         </div>
