@@ -14,8 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::create('customer_user', function (Blueprint $table) {
-            $table->foreignId('customer_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('customer_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('user_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->index(['customer_id', 'user_id']);
             $table->timestamps();
         });

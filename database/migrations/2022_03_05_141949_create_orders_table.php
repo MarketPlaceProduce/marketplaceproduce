@@ -16,7 +16,10 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id()->startingValue(1001);
             $table->timestamps();
-            $table->foreignId('customer_id')->constrained();
+            $table->foreignId('customer_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamp('deliver_at');
             $table->string('status')->default('pending');
         });

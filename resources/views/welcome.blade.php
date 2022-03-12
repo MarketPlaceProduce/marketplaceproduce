@@ -129,14 +129,14 @@
                         <!-- Map - desktop and mobile -->
                         <div class="grid-column span-12 offset-half mt1 align--center hide-md-to-lg reveal-on-scroll is-revealing">
                             <div class="square">
-                                <div class="aspect-ratio__content bg--tan" style="background:rgba(0,0,0,0) url(/img/map.jpeg) no-repeat scroll center center/cover"><a href="https://www.google.com/maps/dir/?api=1&destination=35.64766488%2C-97.52589875" target="_blank" class="link block full-height"></a>
+                                <div class="aspect-ratio__content bg--tan" style="background:rgba(0,0,0,0) url(/img/map.jpeg) no-repeat scroll center center/cover"><a href="https://goo.gl/maps/nUKLXGjqj6agoPF86" target="_blank" class="link block full-height"></a>
                                 </div>
                             </div>
                         </div>
                         <!-- Map - tablet -->
                         <div class="grid-column mt1 align--center show-md-to-lg mobile-col--full reveal-on-scroll is-revealing">
                             <div class="rectangle">
-                                <div class="aspect-ratio__content bg--tan" style="background:rgba(0,0,0,0) url(/img/map.jpeg) no-repeat scroll center center/cover"><a href="https://www.google.com/maps/dir/?api=1&destination=35.64766488%2C-97.52589875" target="_blank" class="link block full-height"></a>
+                                <div class="aspect-ratio__content bg--tan" style="background:rgba(0,0,0,0) url(/img/map.jpeg) no-repeat scroll center center/cover"><a href="https://goo.gl/maps/nUKLXGjqj6agoPF86" target="_blank" class="link block full-height"></a>
                                 </div>
                             </div>
                         </div>

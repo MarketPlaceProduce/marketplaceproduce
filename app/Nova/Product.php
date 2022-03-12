@@ -8,6 +8,7 @@ use Laravel\Nova\Fields\Currency;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Product extends Resource
@@ -44,6 +45,20 @@ class Product extends Resource
     public function fields(Request $request)
     {
         return [
+            Avatar::make('Image')
+                ->thumbnail(function ($value, $disk) {
+                    return $value;
+                })
+                ->preview(function ($value, $disk) {
+                    return $value;
+                })
+                ->exceptOnForms()
+                ->squared()
+                ->disableDownload(),
+            
+            Text::make('Image')
+                ->onlyOnForms(),
+
             ID::make(__('ID'), 'id')->sortable(),
 
             Text::make(__('Name'), 'name')->sortable(),
