@@ -41,7 +41,7 @@
                         </div>
                     </div>
                     <div class="price ml-auto mr-2" data-id="{{ $product->id }}">
-                    ${{ number_format($product->source_price * ($product->pivot->markup ?? $product->default_markup), 2) }} &times;
+                    ${{ number_format(($product->source_price * ($product->pivot->markup ?? $product->default_markup)) + $product->source_price, 2) }} &times;
                     </div>
                     <div>
                         <x-input 
